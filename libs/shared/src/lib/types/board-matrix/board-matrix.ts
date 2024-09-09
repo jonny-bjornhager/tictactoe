@@ -1,3 +1,3 @@
-export type CurrentPlayer = 'x' | 'o';
+import { CurrentPlayer } from '../current-player/current-player';
 
 export type BoardMatrix = (CurrentPlayer | null)[];

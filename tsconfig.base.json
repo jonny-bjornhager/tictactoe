@@ -15,9 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@tictactoe/client/components": ["libs/client/components/src/index.ts"],
+      "@tictactoe/server/services": ["libs/server/services/src/index.ts"],
       "@tictactoe/shared": ["libs/shared/src/index.ts"],
-      "@tictactoe/shared/types": ["libs/shared/src/lib/types/index.ts"],
-      "@tictactoe/shared/constants": ["libs/shared/src/lib/constants/index.ts"]
+      "@tictactoe/shared/constants": ["libs/shared/src/lib/constants/index.ts"],
+      "@tictactoe/shared/types": ["libs/shared/src/lib/types/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
