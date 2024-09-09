@@ -19,5 +19,12 @@
     "src/**/*.spec.jsx",
     "src/**/*.test.jsx"
   ],
-  "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"]
+  "include": [
+    "src/**/*.js",
+    "src/**/*.jsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "../../libs/client/hooks/src/lib/useGame.ts",
+    "../../libs/client/hooks/src/lib/useSocket.ts"
+  ]
 }

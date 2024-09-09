@@ -1,16 +1,15 @@
 import React, { createContext, useState } from 'react';
-import { PlayerData } from '@tictactoe/shared/types';
-
-type BoardMatrix = (string | null)[];
+import { BoardMatrix, PlayerData } from '@tictactoe/shared/types';
 
 interface GameContextProps {
   boardMatrix: BoardMatrix;
   roomId: string | null;
-  playersInRoom: PlayerData[];
-
-  setBoardMatrix: React.Dispatch<React.SetStateAction<(string | null)[]>>;
+  players: PlayerData[];
+  gameOver: boolean;
+  setBoardMatrix: React.Dispatch<React.SetStateAction<BoardMatrix>>;
   setRoomId: React.Dispatch<React.SetStateAction<string | null>>;
-  setPlayersInRoom: React.Dispatch<React.SetStateAction<PlayerData[]>>;
+  setPlayers: React.Dispatch<React.SetStateAction<PlayerData[]>>;
+  setGameOver: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface GameProviderProps {
@@ -20,28 +19,33 @@ interface GameProviderProps {
 export const GameContext = createContext<GameContextProps>({
   boardMatrix: [],
   roomId: null,
-  playersInRoom: [],
+  players: [],
+  gameOver: false,
   setBoardMatrix: () => {},
   setRoomId: () => {},
-  setPlayersInRoom: () => {},
+  setPlayers: () => {},
+  setGameOver: () => {},
 });
 
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [boardMatrix, setBoardMatrix] = useState<BoardMatrix>(
     Array(9).fill(null)
   );
-  const [playersInRoom, setPlayersInRoom] = useState<PlayerData[]>([]);
+  const [players, setPlayers] = useState<PlayerData[]>([]);
   const [roomId, setRoomId] = useState<string | null>(null);
+  const [gameOver, setGameOver] = useState<boolean>(false);
 
   return (
     <GameContext.Provider
       value={{
         boardMatrix,
         roomId,
-        playersInRoom,
+        players,
+        gameOver,
         setBoardMatrix,
         setRoomId,
-        setPlayersInRoom,
+        setPlayers,
+        setGameOver,
       }}
     >
       {children}

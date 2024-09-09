@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { GameContext } from '../contexts/game-provicer/game-provider';
+import { GameContext } from '@tictactoe/client/contexts';
 
 export const useGame = () => {
   return useContext(GameContext);

@@ -1,0 +1,133 @@
+.square {
+    position: relative;
+    background-color: transparent;
+    border: 5px solid var(--clr-secondary);
+    color: var(--clr-secondary);
+    display: grid;
+    place-items: center;
+
+    &:nth-child(3n + 1) {
+        border-inline-start: none;
+    };
+
+    &:nth-child(3n) {
+        border-inline-end: none;
+    }
+
+    &:nth-child(-n + 3) 
+    {
+        border-block-start: none;
+    }
+
+    &:nth-last-child(-n + 3) 
+    {
+        border-block-end: none;
+    }
+
+    button {
+        border: none;
+        background-color: transparent;
+        inline-size: 100%;
+        block-size: 100%;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+
+.x {
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        animation: 1s enterIn;
+        
+    }
+
+    &::before {
+        block-size: 70%;
+        inline-size: 12.5%;
+        background-color: var(--clr-secondary);
+        transform: rotate(-45deg);
+        animation: .1s enterInXBefore ease-in;
+    }
+
+    &::after {
+        block-size: 70%;
+        inline-size: 12.5%;
+        background-color: var(--clr-secondary);
+        transform: rotate(45deg);
+        animation: .1s enterInXAfter ease-in;
+    }
+}
+
+
+.o {
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        animation: .1s enterInO ease-in;
+        
+    }
+
+    &::before {
+        block-size: 72%;
+        inline-size: 72%;
+        border-radius: 50%;
+        background-color: var(--clr-secondary);
+    }
+
+    &::after {
+        block-size: 50%;
+        inline-size: 50%;
+        border-radius: 50%;
+        background-color: var(--clr-primary);
+    }
+}
+
+@keyframes enterInXBefore {
+    0% {
+        transform: scale(.2) rotate(-45deg);
+    }
+
+    80% {
+        transform: scale(1.1) rotate(-45deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(-45deg);
+    }
+    
+}
+
+@keyframes enterInXAfter{
+    0% {
+        transform: scale(.2) rotate(45deg);
+    }
+
+    80% {
+        transform: scale(1.1) rotate(45deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(45deg);
+    }
+    
+}
+
+
+
+@keyframes enterInO {
+    0% {
+        transform: scale(.2);
+    }
+
+    80% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+    
+}

@@ -21,8 +21,6 @@ export const JoinGame: React.FC<JoinRoomProps> = ({
       <span>Or...</span>
       <div className={s['join-section']}>
         <input
-          minLength={20}
-          maxLength={20}
           className={s['room-input']}
           placeholder="Enter a room ID..."
           onChange={onChange}

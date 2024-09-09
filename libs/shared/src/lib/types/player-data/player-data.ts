@@ -3,4 +3,5 @@ export interface PlayerData {
   name: string;
   id: string;
   roomId: string;
+  score: number;
 }

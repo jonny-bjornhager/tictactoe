@@ -16,6 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@tictactoe/client/components": ["libs/client/components/src/index.ts"],
+      "@tictactoe/client/contexts": ["libs/client/contexts/src/index.ts"],
+      "@tictactoe/client/hooks": ["libs/client/hooks/src/index.ts"],
       "@tictactoe/server/services": ["libs/server/services/src/index.ts"],
       "@tictactoe/shared": ["libs/shared/src/index.ts"],
       "@tictactoe/shared/constants": ["libs/shared/src/lib/constants/index.ts"],

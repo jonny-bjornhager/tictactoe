@@ -3,8 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 
 import App from './App';
 
-import { SocketProvider } from './contexts/socket-provider/socket-provider';
-import { GameProvider } from './contexts/game-provicer/game-provider';
+import { GameProvider, SocketProvider } from '@tictactoe/client/contexts';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

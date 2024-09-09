@@ -1,0 +1,13 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    block-size: 100%;
+    inline-size: 100%;
+    max-block-size: var(--max-board-size);
+    max-inline-size: var(--max-board-size);
+
+}
+
+.non-interact {
+    pointer-events: none;
+}

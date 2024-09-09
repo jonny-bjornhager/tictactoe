@@ -4,10 +4,14 @@ import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { SOCKET_EVENTS } from '@tictactoe/shared/constants';
 import {
+  BoardMatrix,
   ClientGameData,
   HostGameData,
   PlayerData,
+  IncomingMoveData,
+  UpdatedBoardData,
 } from '@tictactoe/shared/types';
+
 import { GameState } from '@tictactoe/server/services';
 configDotenv();
 
@@ -26,8 +30,6 @@ const io = new Server(server, {
 const gameStates: { [roomId: string]: GameState } = {};
 
 io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
-  console.log(`User ${socket.id} has connected`);
-
   // When a player hosts a room
   socket.on(SOCKET_EVENTS.hostGame, () => {
     const roomId = `game_${socket.id}`;
@@ -35,7 +37,8 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
       id: socket.id,
       isHost: true,
       name: 'x',
-      roomId: `${roomId}`,
+      roomId: roomId,
+      score: 0,
     };
 
     // Initiate game state
@@ -43,11 +46,15 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
       Array(9).fill(null),
       'x',
       [playerData],
+      false,
       roomId
     );
+
+    console.log(gameStates[roomId].getCurrentPlayer());
     socket.join(roomId);
     socket.leave(socket.id);
 
+    console.log(roomId);
     const hostGameData: HostGameData = {
       boardMatrixData: gameStates[roomId].getBoardMatrix(),
       players: gameStates[roomId].getPlayers(),
@@ -57,16 +64,16 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
 
     // Return data to set on client
     socket.emit(SOCKET_EVENTS.isHosting, {
-      hostGameData,
+      ...hostGameData,
     });
   });
 
   // When a player joins a hosted room
   socket.on(SOCKET_EVENTS.joinGame, (data: PlayerData) => {
-    const roomId = data.roomId;
+    const roomId = `game_${data.roomId}`;
     const roomExists = io.sockets.adapter.rooms.get(roomId);
     const gameState = gameStates[roomId];
-
+    console.log(roomId);
     // If the room doesn't exist or is full, send a message and return
     if (!roomExists) {
       socket.emit(SOCKET_EVENTS.enterDisallowed, {
@@ -80,9 +87,7 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
       return;
     } else {
       const joinedPlayer: PlayerData = {
-        id: data.id,
-        isHost: data.isHost,
-        name: data.name,
+        ...data,
         roomId: roomId,
       };
 
@@ -97,6 +102,54 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
       };
 
       socket.emit(SOCKET_EVENTS.hasJoined, clientGameData);
+    }
+  });
+
+  // When a player makes a move
+  socket.on(SOCKET_EVENTS.playerMove, (data: IncomingMoveData) => {
+    const { boardMatrix, index, roomId } = data;
+    console.log(roomId);
+    if (!roomId) {
+      return;
+    }
+    //
+    const gameState = gameStates[roomId];
+    const newMatrix: BoardMatrix = [...boardMatrix];
+    newMatrix[index] = gameState.getCurrentPlayer();
+
+    gameState.setBoardMatrix(newMatrix);
+    const updatedBoardData: UpdatedBoardData = {
+      boardMatrix: gameState.getBoardMatrix(),
+      currentPlayer: gameState.getCurrentPlayer(),
+    };
+
+    if (gameState.checkDraw()) {
+      gameState.setGameOver(true);
+      socket.to(roomId).emit('game_over', {
+        ...updatedBoardData,
+        gameOver: gameState.getGameOver(),
+        message: "It's a draw!",
+      });
+      return;
+    } else if (gameState.checkWinner()) {
+      gameState.setGameOver(true);
+      socket.to(roomId).emit('game_over', {
+        ...updatedBoardData,
+        gameOver: gameState.getGameOver(),
+        message: `${gameState.getCurrentPlayer().toUpperCase()} wins!`,
+        myTurn: false,
+      });
+      return;
+    } else {
+      gameState.switchCurrentPlayer(gameState.getCurrentPlayer());
+      const updatedBoardData: UpdatedBoardData = {
+        boardMatrix: gameState.getBoardMatrix(),
+        currentPlayer: gameState.getCurrentPlayer(),
+      };
+      console.log(updatedBoardData);
+      socket.to(roomId).emit(SOCKET_EVENTS.updateBoard, {
+        ...updatedBoardData,
+      });
     }
   });
 });
