@@ -3,7 +3,7 @@ import { configDotenv } from 'dotenv';
 import { createServer } from 'http';
 import { Server, Socket } from 'socket.io';
 import { SOCKET_EVENTS } from '@tictactoe/shared/constants';
-import { Player } from '@tictactoe/shared/types';
+import { GameData, Player } from '@tictactoe/shared/types';
 import { GameState } from '@tictactoe/server/services';
 configDotenv();
 
@@ -44,11 +44,16 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
     socket.join(roomId);
     socket.leave(socket.id);
 
-    console.log(gameStates[roomId].getPlayers());
-    socket.emit('hosting', {
-      serverBoardMatrix: gameStates[roomId].getBoardMatrix(),
+    const gameData: GameData = {
+      boardMatrixData: gameStates[roomId].getBoardMatrix(),
       players: gameStates[roomId].getPlayers(),
       currentPlayer: gameStates[roomId].getCurrentPlayer(),
+      roomId: roomId,
+    };
+
+    // Return data to set on client
+    socket.emit(SOCKET_EVENTS.isHosting, {
+      gameData,
     });
   });
 });
