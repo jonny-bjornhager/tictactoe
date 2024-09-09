@@ -14,7 +14,11 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@tictactoe/shared": ["libs/shared/src/index.ts"],
+      "@tictactoe/shared/types": ["libs/shared/src/lib/types/index.ts"],
+      "@tictactoe/shared/constants": ["libs/shared/src/lib/constants/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
