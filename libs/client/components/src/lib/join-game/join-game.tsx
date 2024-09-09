@@ -3,19 +3,19 @@ import s from './join-game.module.css';
 interface JoinRoomProps {
   errorMsg: string | null;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onHostRoom: () => void;
-  onJoinRoom: () => void;
+  onHostGame: () => void;
+  onJoinGame: () => void;
 }
 
 export const JoinGame: React.FC<JoinRoomProps> = ({
   errorMsg,
   onChange,
-  onHostRoom,
-  onJoinRoom,
+  onHostGame,
+  onJoinGame,
 }) => {
   return (
     <div className={s['join-game']}>
-      <button className={s['btn']} onClick={onHostRoom}>
+      <button className={s['btn']} onClick={onHostGame}>
         Host a game
       </button>
       <span>Or...</span>
@@ -27,7 +27,7 @@ export const JoinGame: React.FC<JoinRoomProps> = ({
           placeholder="Enter a room ID..."
           onChange={onChange}
         />
-        <button className={s['btn']} onClick={onJoinRoom}>
+        <button className={s['btn']} onClick={onJoinGame}>
           Join
         </button>
       </div>

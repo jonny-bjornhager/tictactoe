@@ -1,14 +1,18 @@
-import { BoardMatrix, CurrentPlayer, Player } from '@tictactoe/shared/types';
+import {
+  BoardMatrix,
+  CurrentPlayer,
+  PlayerData,
+} from '@tictactoe/shared/types';
 
 export class GameState {
   boardMatrix: BoardMatrix;
   currentPlayer: CurrentPlayer;
-  players: Player[];
+  players: PlayerData[];
   roomId?: string;
   constructor(
     boardMatrix: BoardMatrix,
     currentPlayer: CurrentPlayer,
-    players: Player[],
+    players: PlayerData[],
     roomId?: string
   ) {
     this.boardMatrix = boardMatrix;
@@ -27,7 +31,7 @@ export class GameState {
     return this.currentPlayer;
   }
 
-  setPlayers(input: Player[]) {
+  setPlayers(input: PlayerData[]) {
     this.players = input;
   }
   getPlayers() {

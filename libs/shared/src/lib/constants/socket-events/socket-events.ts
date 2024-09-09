@@ -5,4 +5,5 @@ export const SOCKET_EVENTS = {
   hostGame: 'host_game',
   isHosting: 'is_hosting',
   hasJoined: 'has_joined',
+  enterDisallowed: 'enter_disallowed',
 };

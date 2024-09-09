@@ -1,4 +1,4 @@
-export interface Player {
+export interface PlayerData {
   isHost: boolean;
   name: string;
   id: string;

@@ -1,10 +1,16 @@
 import { BoardMatrix } from '../board-matrix/board-matrix';
 import { CurrentPlayer } from '../current-player/current-player';
-import { Player } from '../player/player';
+import { PlayerData } from '../player-data/player-data';
 
-export interface GameData {
+export interface HostGameData {
   roomId: string;
-  players: Player[];
+  players: PlayerData[];
   boardMatrixData: BoardMatrix;
+  currentPlayer: CurrentPlayer;
+}
+
+export interface ClientGameData {
+  roomId: string;
+  players: PlayerData[];
   currentPlayer: CurrentPlayer;
 }

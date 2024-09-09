@@ -1,16 +1,16 @@
 import React, { createContext, useState } from 'react';
-import { Player } from '@tictactoe/shared/types';
+import { PlayerData } from '@tictactoe/shared/types';
 
 type BoardMatrix = (string | null)[];
 
 interface GameContextProps {
   boardMatrix: BoardMatrix;
   roomId: string | null;
-  playersInRoom: Player[];
+  playersInRoom: PlayerData[];
 
   setBoardMatrix: React.Dispatch<React.SetStateAction<(string | null)[]>>;
   setRoomId: React.Dispatch<React.SetStateAction<string | null>>;
-  setPlayersInRoom: React.Dispatch<React.SetStateAction<Player[]>>;
+  setPlayersInRoom: React.Dispatch<React.SetStateAction<PlayerData[]>>;
 }
 
 interface GameProviderProps {
@@ -30,7 +30,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [boardMatrix, setBoardMatrix] = useState<BoardMatrix>(
     Array(9).fill(null)
   );
-  const [playersInRoom, setPlayersInRoom] = useState<Player[]>([]);
+  const [playersInRoom, setPlayersInRoom] = useState<PlayerData[]>([]);
   const [roomId, setRoomId] = useState<string | null>(null);
 
   return (

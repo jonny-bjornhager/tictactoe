@@ -4,7 +4,7 @@ import { useGame, useSocket } from './hooks';
 import { SOCKET_EVENTS } from '@tictactoe/shared/constants';
 
 import { JoinGame } from '@tictactoe/client/components';
-import { GameData } from '@tictactoe/shared';
+import { ClientGameData, HostGameData } from '@tictactoe/shared';
 
 export function App() {
   const socket = useSocket();
@@ -31,7 +31,7 @@ export function App() {
       id: socket.id,
       isHost: false,
       name: 'o',
-      roomId: `${roomIdInput}`,
+      roomId: `game_${roomIdInput}`,
     });
   }
 
@@ -41,7 +41,7 @@ export function App() {
 
   useEffect(() => {
     // Event callbacks
-    function onHostGame(data: GameData) {
+    function onHostGame(data: HostGameData) {
       setRoomId(`${socket?.id}`);
       setIsInGame(true);
       setPlayersInRoom(data.players);
@@ -50,10 +50,20 @@ export function App() {
       setCurrentPlayer(data.currentPlayer);
     }
 
+    function onJoinGame(data: ClientGameData) {
+      setRoomId(data.roomId);
+      setIsInGame(true);
+      setPlayersInRoom(data.players);
+      setCurrentPlayer(data.currentPlayer);
+      setPlayerName('o');
+    }
+
     socket?.on(SOCKET_EVENTS.isHosting, onHostGame);
+    socket?.on(SOCKET_EVENTS.hasJoined, onJoinGame);
 
     return () => {
       socket?.off(SOCKET_EVENTS.isHosting, onHostGame);
+      socket?.off(SOCKET_EVENTS.hasJoined, onJoinGame);
     };
   }, [socket, setPlayersInRoom, setBoardMatrix, setRoomId]);
 
@@ -62,8 +72,8 @@ export function App() {
       {!isInGame && (
         <JoinGame
           onChange={handleRoomInputChange}
-          onHostRoom={handleHostGame}
-          onJoinRoom={handleJoinGame}
+          onHostGame={handleHostGame}
+          onJoinGame={handleJoinGame}
           errorMsg={errorMsg}
         />
       )}
