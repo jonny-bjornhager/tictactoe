@@ -103,7 +103,6 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
   });
 
   socket.on(SOCKET_EVENTS.startGame, (data: { roomId: string }) => {
-    console.log(data);
     socket.to(data.roomId).emit(SOCKET_EVENTS.gameStarted, {
       gameStarted: true,
     });
@@ -112,7 +111,6 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
   // When a player makes a move
   socket.on(SOCKET_EVENTS.playerMove, (data: IncomingMoveData) => {
     const { boardMatrix, index, roomId } = data;
-    console.log(roomId);
     if (!roomId) {
       return;
     }
@@ -150,7 +148,6 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
         boardMatrix: gameState.getBoardMatrix(),
         currentPlayer: gameState.getCurrentPlayer(),
       };
-      console.log(updatedBoardData);
       socket.to(roomId).emit(SOCKET_EVENTS.updateBoard, {
         ...updatedBoardData,
       });

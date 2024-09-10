@@ -16,14 +16,20 @@
 
   button {
     border: none;
+    display: flex;
+    gap: .2em;
     background-color: transparent;
     color: var(--clr-secondary);
     font-weight: 700;
-
     &:hover {
       cursor: pointer;
 
     }
+  }
+
+  img {
+    block-size: 1.8rem;
+    inline-size: 1.8rem;
   }
 }
 
