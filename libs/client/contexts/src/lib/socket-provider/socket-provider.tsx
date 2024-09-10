@@ -12,8 +12,13 @@ interface SocketProviderProps {
 export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
   const [socket, setSocket] = useState<SocketContextType>(null);
 
+  const host =
+    import.meta.env.VITE_MODE === 'production'
+      ? 'http'
+      : 'http://localhost:3001';
+
   useEffect(() => {
-    const newSocket = io('http://localhost:3001');
+    const newSocket = io(host);
 
     function onConnect() {
       setSocket(newSocket);

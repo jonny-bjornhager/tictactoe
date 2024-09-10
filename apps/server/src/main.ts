@@ -50,11 +50,9 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
       roomId
     );
 
-    console.log(gameStates[roomId].getCurrentPlayer());
     socket.join(roomId);
     socket.leave(socket.id);
 
-    console.log(roomId);
     const hostGameData: HostGameData = {
       boardMatrixData: gameStates[roomId].getBoardMatrix(),
       players: gameStates[roomId].getPlayers(),
@@ -73,7 +71,6 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
     const roomId = `game_${data.roomId}`;
     const roomExists = io.sockets.adapter.rooms.get(roomId);
     const gameState = gameStates[roomId];
-    console.log(roomId);
     // If the room doesn't exist or is full, send a message and return
     if (!roomExists) {
       socket.emit(SOCKET_EVENTS.enterDisallowed, {
@@ -99,10 +96,17 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
         players: gameState.getPlayers(),
         currentPlayer: gameState.getCurrentPlayer(),
         roomId: roomId,
+        gameStarted: true,
       };
-
       socket.emit(SOCKET_EVENTS.hasJoined, clientGameData);
     }
+  });
+
+  socket.on(SOCKET_EVENTS.startGame, (data: { roomId: string }) => {
+    console.log(data);
+    socket.to(data.roomId).emit(SOCKET_EVENTS.gameStarted, {
+      gameStarted: true,
+    });
   });
 
   // When a player makes a move
@@ -125,7 +129,7 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
 
     if (gameState.checkDraw()) {
       gameState.setGameOver(true);
-      socket.to(roomId).emit('game_over', {
+      socket.to(roomId).emit(SOCKET_EVENTS.gameOver, {
         ...updatedBoardData,
         gameOver: gameState.getGameOver(),
         message: "It's a draw!",
@@ -133,7 +137,7 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
       return;
     } else if (gameState.checkWinner()) {
       gameState.setGameOver(true);
-      socket.to(roomId).emit('game_over', {
+      socket.to(roomId).emit(SOCKET_EVENTS.gameOver, {
         ...updatedBoardData,
         gameOver: gameState.getGameOver(),
         message: `${gameState.getCurrentPlayer().toUpperCase()} wins!`,

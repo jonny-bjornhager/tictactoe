@@ -13,4 +13,5 @@ export interface ClientGameData {
   roomId: string;
   players: PlayerData[];
   currentPlayer: CurrentPlayer;
+  gameStarted: boolean;
 }

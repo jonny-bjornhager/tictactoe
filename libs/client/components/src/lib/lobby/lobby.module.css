@@ -1,0 +1,48 @@
+.lobby {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--clr-secondary);
+  gap: 2rem;
+
+  * {
+    font-size: 1.5rem;
+  }
+}
+
+.id-click-container {
+  display: flex;
+  gap: 1rem;
+
+  button {
+    border: none;
+    background-color: transparent;
+    color: var(--clr-secondary);
+    font-weight: 700;
+
+    &:hover {
+      cursor: pointer;
+
+    }
+  }
+}
+
+
+
+.quit {
+  text-decoration: none;
+  padding-inline: 1em;
+  padding-block: 0.4em;
+  border: none;
+  background-color: var(--clr-secondary);
+  color: var(--clr-primary);
+  border-radius: 0.7em;
+  &:hover {
+      cursor: pointer;
+      background-color: #c9c9c9;
+  }
+
+  &:visited {
+    color: var(--clr-primary);
+  }
+}

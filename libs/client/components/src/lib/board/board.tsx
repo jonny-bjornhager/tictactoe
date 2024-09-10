@@ -5,7 +5,6 @@ import s from './board.module.css';
 
 import clsx from 'clsx';
 import { SOCKET_EVENTS } from '@tictactoe/shared';
-import { useMemo } from 'react';
 
 interface BoardProps {
   myTurn: boolean;

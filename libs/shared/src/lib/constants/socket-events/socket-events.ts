@@ -3,6 +3,8 @@ export const SOCKET_EVENTS = {
   disconnect: 'disconnection',
   joinGame: 'join_game',
   hostGame: 'host_game',
+  startGame: 'start_game',
+  gameStarted: 'game_started',
   isHosting: 'is_hosting',
   hasJoined: 'has_joined',
   enterDisallowed: 'enter_disallowed',

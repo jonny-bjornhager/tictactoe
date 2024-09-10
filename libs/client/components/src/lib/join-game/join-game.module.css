@@ -23,9 +23,20 @@
     padding-inline: 1em;
     padding-block: 0.4em;
     border: none;
+    color: var(--clr-primary);
     &:hover {
         cursor: pointer;
         background-color: #c9c9c9;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      outline: none;
+      color: gray;
+
+      &:hover {
+        background-color: unset;
+      }
     }
 }
 
