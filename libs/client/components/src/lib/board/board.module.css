@@ -6,6 +6,7 @@
     max-block-size: var(--max-board-size);
     max-inline-size: var(--max-board-size);
 
+    filter: var(--drop-shadow);
 }
 
 .non-interact {

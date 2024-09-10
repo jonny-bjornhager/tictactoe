@@ -12,19 +12,29 @@
 
 .id-click-container {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: .1em;
 
   button {
     border: none;
     display: flex;
-    gap: .2em;
+    align-items: center;
     background-color: transparent;
     color: var(--clr-secondary);
     font-weight: 700;
+    padding-inline: .5em;
+    padding-block: .2em;
+    border-radius: 5px;
+    transition: background-color color .05s ease-in-out;
     &:hover {
       cursor: pointer;
-
+      background-color: var(--clr-primary-dark);
     }
+
+    &:active {
+      color: var(--clr-grey);
+    }
+
   }
 
   img {

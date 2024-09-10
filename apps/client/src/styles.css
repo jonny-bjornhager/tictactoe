@@ -5,10 +5,16 @@
     /* Colors */
     --clr-primary: #131313;
     --clr-secondary: #F5F7F8;
-    --clr-primary-dark: #161616;
+    --clr-primary-light: #161616;
+    --clr-primary-dark: rgb(14, 13, 13);
+
+    --clr-grey: rgb(207, 207, 207);
 
     /* Sizes */
     --max-board-size: 37.5rem;
+
+    /* Shadows */
+    --drop-shadow: drop-shadow(2px 2px 6px #00000075);
 }
 
 * {

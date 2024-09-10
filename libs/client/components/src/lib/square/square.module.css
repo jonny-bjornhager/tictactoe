@@ -14,17 +14,18 @@
         border-inline-end: none;
     }
 
-    &:nth-child(-n + 3) 
+    &:nth-child(-n + 3)
     {
         border-block-start: none;
     }
 
-    &:nth-last-child(-n + 3) 
+    &:nth-last-child(-n + 3)
     {
         border-block-end: none;
     }
 
     button {
+        position: absolute;
         border: none;
         background-color: transparent;
         inline-size: 100%;
@@ -34,30 +35,38 @@
         }
     }
 }
+.outer {
+  block-size: 100%;
+  inline-size: 100%;
+}
 
 
 .x {
-    &::before, &::after {
-        content: '';
-        position: absolute;
-        animation: 1s enterIn;
-        
-    }
+  block-size: 100%;
+  inline-size: 100%;
+  position: relative;
+
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    left: 50%;
+    top: 50%;
+  }
 
     &::before {
         block-size: 70%;
         inline-size: 12.5%;
         background-color: var(--clr-secondary);
-        transform: rotate(-45deg);
-        animation: .1s enterInXBefore ease-in;
-    }
+        transform: translate(-50%, -50%) rotateZ(45deg);
 
-    &::after {
+      }
+
+      &::after {
         block-size: 70%;
         inline-size: 12.5%;
         background-color: var(--clr-secondary);
-        transform: rotate(45deg);
-        animation: .1s enterInXAfter ease-in;
+        transform: translate(-50%, -50%) rotateZ(-45deg);
     }
 }
 
@@ -66,8 +75,9 @@
     &::before, &::after {
         content: '';
         position: absolute;
-        animation: .1s enterInO ease-in;
-        
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 
     &::before {
@@ -85,49 +95,3 @@
     }
 }
 
-@keyframes enterInXBefore {
-    0% {
-        transform: scale(.2) rotate(-45deg);
-    }
-
-    80% {
-        transform: scale(1.1) rotate(-45deg);
-    }
-
-    100% {
-        transform: scale(1) rotate(-45deg);
-    }
-    
-}
-
-@keyframes enterInXAfter{
-    0% {
-        transform: scale(.2) rotate(45deg);
-    }
-
-    80% {
-        transform: scale(1.1) rotate(45deg);
-    }
-
-    100% {
-        transform: scale(1) rotate(45deg);
-    }
-    
-}
-
-
-
-@keyframes enterInO {
-    0% {
-        transform: scale(.2);
-    }
-
-    80% {
-        transform: scale(1.1);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-    
-}

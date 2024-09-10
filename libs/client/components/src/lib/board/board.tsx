@@ -1,4 +1,5 @@
 import { useGame, useSocket } from '@tictactoe/client/hooks';
+import { animated, useSpring } from '@react-spring/web';
 
 import { Square } from '../square/square';
 import s from './board.module.css';
@@ -13,6 +14,14 @@ interface BoardProps {
 export const Board: React.FC<BoardProps> = ({ myTurn }) => {
   const socket = useSocket();
   const { boardMatrix, roomId, gameOver } = useGame();
+  const [props] = useSpring(
+    () => ({
+      config: { mass: 2, tension: 800, friction: 18 },
+      from: { opacity: 0, x: -100 },
+      to: { opacity: 1, x: 0 },
+    }),
+    []
+  );
 
   function handleClickSquare(index: number) {
     if (boardMatrix[index] !== null) {
@@ -41,5 +50,9 @@ export const Board: React.FC<BoardProps> = ({ myTurn }) => {
     );
   }
 
-  return <div className={classes}>{boardMatrix?.map(matrixMapper)}</div>;
+  return (
+    <animated.div style={props} className={classes}>
+      {boardMatrix?.map(matrixMapper)}
+    </animated.div>
+  );
 };

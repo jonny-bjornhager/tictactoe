@@ -1,3 +1,4 @@
+import { animated, useSpring } from '@react-spring/web';
 import s from './join-game.module.css';
 
 interface JoinRoomProps {
@@ -15,8 +16,22 @@ export const JoinGame: React.FC<JoinRoomProps> = ({
   onHostGame,
   onJoinGame,
 }) => {
+  const [props] = useSpring(
+    () => ({
+      config: { mass: 2, tension: 500, friction: 18 },
+      from: { opacity: 0, y: -100 },
+      to: { opacity: 1, y: 0 },
+    }),
+    []
+  );
+
+  function enterPressed(event: React.KeyboardEvent) {
+    if (event.key === 'Enter') {
+      onJoinGame();
+    }
+  }
   return (
-    <div className={s['join-game']}>
+    <animated.div style={props} className={s['join-game']}>
       <button className={s['btn']} onClick={onHostGame}>
         New Game
       </button>
@@ -26,12 +41,13 @@ export const JoinGame: React.FC<JoinRoomProps> = ({
           className={s['room-input']}
           placeholder="Enter a room ID..."
           onChange={onChange}
+          onKeyUp={enterPressed}
         />
         <button disabled={!canJoin} className={s['btn']} onClick={onJoinGame}>
           Join
         </button>
       </div>
-      {errorMsg}
-    </div>
+      <span className={s['error']}>{errorMsg}</span>
+    </animated.div>
   );
 };
