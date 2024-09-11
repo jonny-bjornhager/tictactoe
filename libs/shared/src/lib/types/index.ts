@@ -7,3 +7,4 @@ export * from './message/message';
 export * from './player-data/player-data';
 export * from './updated-board-data/updated-board-data';
 export * from './win-condition/win-condition';
+export * from './reload-data/reload-data';

@@ -6,7 +6,7 @@ interface GameProps {
   myTurn: boolean;
 }
 
-export const Game: React.FC<GameProps> = ({ message, myTurn }) => {
+export const Game: React.FC<GameProps> = ({ myTurn }) => {
   return (
     <div className={s['game']}>
       <Board myTurn={myTurn} />

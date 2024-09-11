@@ -10,6 +10,10 @@
 
 <img src="https://i.ibb.co/2FPwYqh/Sk-rmbild-2024-09-11-132410.png" alt="project-screenshot" width="760" height="440/">
 
+<img src="https://i.ibb.co/Nrrwjw8/Sk-rmbild-2024-09-11-210704.png" alt="project-screenshot" width="760" height="440/">
+
+<img src="https://i.ibb.co/g3N5Wdx/Sk-rmbild-2024-09-11-210900.png" alt="project-screenshot" width="760" height="440/">
+
 <h2>🧐 Features</h2>
 
 Here're some of the project's best features:

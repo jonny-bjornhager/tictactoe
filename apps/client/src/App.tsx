@@ -17,6 +17,7 @@ import {
   HostGameData,
   Message,
   PlayerData,
+  ReloadData,
   UpdatedBoardData,
 } from '@tictactoe/shared';
 
@@ -105,7 +106,7 @@ export function App() {
       });
     }
 
-    function onEnterDisallowed(data: { message: string }) {
+    function onEnterDisallowed(data: Message) {
       setErrorMsg(data.message);
     }
 
@@ -127,11 +128,7 @@ export function App() {
       setInLobby(false);
     }
 
-    function onReloadGame(data: {
-      boardMatrix: BoardMatrix;
-      currentPlayer: CurrentPlayer;
-      gameOver: boolean;
-    }) {
+    function onReloadGame(data: ReloadData) {
       setBoardMatrix(data.boardMatrix);
       setCurrentPlayer(data.currentPlayer);
       setGameOver(false);
@@ -197,7 +194,7 @@ export function App() {
       )}
       {inLobby && !gameStarted && <Lobby playerName={playerName} />}
       {!inLobby && gameStarted && <Game myTurn={myTurn} />}
-      <Modal isOpen={gameOver} toggle={() => console.log('first')}>
+      <Modal isOpen={gameOver}>
         <ReplayContent
           headline={message}
           onQuit={handleQuitGame}

@@ -1,1 +1,3 @@
-export type Message = string | null;
+export interface Message {
+  message: string | null;
+}
