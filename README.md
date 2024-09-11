@@ -4,6 +4,8 @@
 
 <h2>Project Screenshots:</h2>
 
+<p>As of now, this game only features playing locally on one machine using two separate windows</p>
+
 <img src="https://i.ibb.co/1RS0bLZ/Sk-rmbild-2024-09-11-132234.png" alt="project-screenshot" width="760" height="440/">
 
 <img src="https://i.ibb.co/cgQfkbs/Sk-rmbild-2024-09-11-132319.png" alt="project-screenshot" width="760" height="440/">
