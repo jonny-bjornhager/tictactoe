@@ -35,6 +35,7 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
     const roomId = `game_${socket.id}`;
     const playerData: PlayerData = {
       id: 1,
+      socketId: socket.id,
       isHost: true,
       name: 'x',
       roomId: roomId,
@@ -157,6 +158,28 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
         ...updatedBoardData,
       });
     }
+  });
+
+  socket.on(SOCKET_EVENTS.quitGame, (data: { roomId: string }) => {
+    socket.to(data.roomId).emit(SOCKET_EVENTS.reloadWindow);
+  });
+
+  socket.on(SOCKET_EVENTS.disconnect, (data) => {
+    for (const roomId in gameStates) {
+      const gameState = gameStates[roomId];
+      const updatedPlayerState = gameState
+        .getPlayers()
+        .filter((player: PlayerData) => player.socketId !== socket.id);
+      gameState.setPlayers(updatedPlayerState);
+
+      if (gameState.getPlayers().length === 0) {
+        delete gameStates[roomId];
+      }
+    }
+    console.log(data.roomId);
+    socket.to(data.roomId).emit(SOCKET_EVENTS.afterDisconnect, {
+      boardMatrix: Array(9).fill(null),
+    });
   });
 });
 

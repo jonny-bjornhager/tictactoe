@@ -11,7 +11,6 @@ interface LobbyProps {
 
 export const Lobby: React.FC<LobbyProps> = ({ playerName }) => {
   const { roomId } = useGame();
-
   const [props] = useSpring(
     () => ({
       config: { mass: 2, tension: 500, friction: 18 },
@@ -24,7 +23,7 @@ export const Lobby: React.FC<LobbyProps> = ({ playerName }) => {
   const formattedRoomId = roomId?.replace('game_', '');
 
   if (!formattedRoomId) {
-    return;
+    return null;
   }
 
   const handleCopy = async () => {

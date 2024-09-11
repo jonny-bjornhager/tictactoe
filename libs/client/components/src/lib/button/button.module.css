@@ -1,0 +1,32 @@
+.btn {
+  padding-inline: 1em;
+  padding-block: 0.4em;
+  border: none;
+  font-size: var(--font-size-small);
+  color: var(--clr-primary);
+  border-radius: 0.7em;
+  &:hover {
+    cursor: pointer;
+    background-color: #c9c9c9;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    outline: none;
+    color: gray;
+
+    &:hover {
+      background-color: unset;
+    }
+  }
+
+  @media screen and (min-width: 600px) {
+      font-size: var(--font-size-regular);
+
+  }
+
+  @media screen and (min-width: 768px) {
+      font-size: var(--font-size-big);
+
+  }
+}

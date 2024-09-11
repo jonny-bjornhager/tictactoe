@@ -26,7 +26,6 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
     newSocket.on('connect', onConnect);
 
-    // Cleanup on unmount
     return () => {
       newSocket.disconnect();
     };

@@ -1,6 +1,7 @@
 export const SOCKET_EVENTS = {
   connect: 'connection',
   disconnect: 'disconnection',
+  afterDisconnect: 'afterDisconnect',
   joinGame: 'join_game',
   hostGame: 'host_game',
   startGame: 'start_game',
@@ -11,4 +12,7 @@ export const SOCKET_EVENTS = {
   playerMove: 'player_move',
   updateBoard: 'update_board',
   gameOver: 'game_over',
+  playAgain: 'play_again',
+  quitGame: 'quit_game',
+  reloadWindow: 'reload_window',
 };

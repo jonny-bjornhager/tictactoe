@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
+
 import { SOCKET_EVENTS } from '@tictactoe/shared/constants';
 import { useGame, useSocket } from '@tictactoe/client/hooks';
-import { Game, JoinGame, Lobby, Modal } from '@tictactoe/client/components';
 import {
+  Game,
+  JoinGame,
+  Lobby,
+  Modal,
+  ReplayContent,
+} from '@tictactoe/client/components';
+import {
+  BoardMatrix,
   ClientGameData,
   CurrentPlayer,
   GameOverData,
@@ -24,7 +32,9 @@ export function App() {
     setCurrentPlayer,
     gameOver,
     setGameOver,
+    roomId,
   } = useGame();
+
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [inLobby, setInLobby] = useState<boolean>(false);
   const [roomIdInput, setRoomIdInput] = useState<string>('');
@@ -53,6 +63,7 @@ export function App() {
       isHost: false,
       name: 'o',
       roomId: roomIdInput,
+      socketId: socket?.id,
       score: 0,
     };
     socket?.emit(SOCKET_EVENTS.joinGame, { ...playerData });
@@ -60,6 +71,14 @@ export function App() {
 
   function handleHostGame() {
     socket?.emit(SOCKET_EVENTS.hostGame);
+  }
+
+  function handlePlayAgain() {
+    socket?.emit(SOCKET_EVENTS.playAgain);
+  }
+
+  function handleQuitGame() {
+    socket?.emit(SOCKET_EVENTS.quitGame, { roomId: roomId });
   }
 
   useEffect(() => {
@@ -104,12 +123,20 @@ export function App() {
       setInLobby(false);
     }
 
+    function onReloadWindow() {
+      if (!window?.location || typeof window?.location === 'undefined') {
+        return;
+      }
+      window.location.reload();
+    }
+
     socket?.on(SOCKET_EVENTS.isHosting, onHostGame);
     socket?.on(SOCKET_EVENTS.hasJoined, onJoinGame);
     socket?.on(SOCKET_EVENTS.updateBoard, onUpdateBoard);
     socket?.on(SOCKET_EVENTS.enterDisallowed, onEnterDisallowed);
     socket?.on(SOCKET_EVENTS.gameOver, onGameOver);
     socket?.on(SOCKET_EVENTS.gameStarted, onGameStarted);
+    socket?.on(SOCKET_EVENTS.reloadWindow, onReloadWindow);
 
     return () => {
       socket?.off(SOCKET_EVENTS.isHosting, onHostGame);
@@ -117,6 +144,7 @@ export function App() {
       socket?.off(SOCKET_EVENTS.updateBoard, onUpdateBoard);
       socket?.off(SOCKET_EVENTS.enterDisallowed, onEnterDisallowed);
       socket?.off(SOCKET_EVENTS.gameStarted, onGameStarted);
+      socket?.off(SOCKET_EVENTS.reloadWindow, onReloadWindow);
     };
   }, [
     socket,
@@ -146,9 +174,12 @@ export function App() {
       )}
       {inLobby && !gameStarted && <Lobby playerName={playerName} />}
       {!inLobby && gameStarted && <Game message={message} myTurn={myTurn} />}
-
       <Modal isOpen={gameOver} toggle={() => setGameOver(false)}>
-        {gameOver && message && <h2>{message}</h2>}
+        <ReplayContent
+          headline={message}
+          onQuit={handleQuitGame}
+          onReplay={() => console.log('replay')}
+        />
       </Modal>
     </main>
   );

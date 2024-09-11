@@ -1,9 +1,11 @@
 import { animated, useSpring } from '@react-spring/web';
 import s from './join-game.module.css';
+import { Button } from '../button/button';
 
 interface JoinRoomProps {
   errorMsg: string | null;
   canJoin: boolean;
+
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onHostGame: () => void;
   onJoinGame: () => void;
@@ -30,11 +32,10 @@ export const JoinGame: React.FC<JoinRoomProps> = ({
       onJoinGame();
     }
   }
+
   return (
     <animated.div style={props} className={s['join-game']}>
-      <button className={s['btn']} onClick={onHostGame}>
-        New Game
-      </button>
+      <Button onClick={onHostGame}>Host Game</Button>
       <span>Or...</span>
       <div className={s['join-section']}>
         <input
@@ -43,7 +44,11 @@ export const JoinGame: React.FC<JoinRoomProps> = ({
           onChange={onChange}
           onKeyUp={enterPressed}
         />
-        <button disabled={!canJoin} className={s['btn']} onClick={onJoinGame}>
+        <button
+          disabled={!canJoin}
+          className={s['btn-join']}
+          onClick={onJoinGame}
+        >
           Join
         </button>
       </div>

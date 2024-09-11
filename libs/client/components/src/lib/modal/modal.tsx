@@ -30,10 +30,10 @@ export const Modal: React.FC<ModalProps> = ({
   });
 
   const bodyTransition = useTransition(isOpen, {
-    from: { opacity: 0, transform: 'translateY(-20px)' },
-    enter: { opacity: 1, transform: 'translateY(0)' },
-    leave: { opacity: 0, transform: 'translateY(-20px)' },
-    config: { duration: duration },
+    from: { opacity: 0, y: -100 },
+    enter: { opacity: 1, y: 0 },
+    leave: { opacity: 0, y: -100 },
+    config: { duration: duration, mass: 2, tension: 500, friction: 18 },
   });
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export const Modal: React.FC<ModalProps> = ({
       return null;
     }
     return (
-      <animated.div onClick={toggle} className={s['backdrop']} style={style}>
+      <animated.div className={s['backdrop']} style={style}>
         {bodyTransition((bodyStyle, bodyItem) => {
           if (!bodyItem) {
             return null;

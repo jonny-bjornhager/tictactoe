@@ -14,9 +14,6 @@
       color: var(--clr-secondary);
   }
 
-  > button {
-      border-radius: 0.7em;
-  }
 
   /* Media Queries for .join-game */
   @media screen and (min-width: 600px) {
@@ -32,7 +29,7 @@
 }
 }
 
-.btn {
+.btn-join {
     padding-inline: 1em;
     padding-block: 0.4em;
     border: none;
