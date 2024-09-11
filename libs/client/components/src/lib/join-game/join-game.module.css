@@ -1,22 +1,35 @@
 .join-game {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
 
+  * {
+      font-size: var(--font-size-small)
+  }
+
+  h2,
+  span {
+      color: var(--clr-secondary);
+  }
+
+  > button {
+      border-radius: 0.7em;
+  }
+
+  /* Media Queries for .join-game */
+  @media screen and (min-width: 600px) {
+      * {
+          font-size: var(--font-size-regular)
+      }
+  }
+
+  @media screen and (min-width: 768px) {
     * {
-        font-size: 1.3rem;
+        font-size: var(--font-size-big)
     }
-
-    h2,
-    span {
-        color: var(--clr-secondary);
-    }
-
-    > button {
-        border-radius: 0.7em;
-    }
+}
 }
 
 .btn {
@@ -60,6 +73,6 @@
 
 
 .error {
-  font-size: 1.5rem;
+  font-size: var(--font-size-xl);
   color: var(--clr-secondary);
 }

@@ -30,7 +30,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
     return () => {
       newSocket.disconnect();
     };
-  }, []);
+  }, [host]);
 
   return (
     <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>

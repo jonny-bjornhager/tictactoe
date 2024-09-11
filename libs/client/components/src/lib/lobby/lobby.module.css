@@ -6,12 +6,26 @@
   gap: 2rem;
 
   * {
-    font-size: 1.5rem;
+    font-size: var(--font-size-small)
   }
+
+
+  @media screen and (min-width: 460px) {
+    * {
+        font-size: var(--font-size-regular)
+    }
+}
+
+@media screen and (min-width: 768px) {
+  * {
+      font-size: var(--font-size-big)
+  }
+}
 }
 
 .id-click-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: .1em;
 
@@ -41,6 +55,11 @@
     block-size: 1.8rem;
     inline-size: 1.8rem;
   }
+
+  @media screen and (min-width: 600px) {
+    flex-direction: row;
+  }
+
 }
 
 

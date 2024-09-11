@@ -16,7 +16,7 @@ export const Board: React.FC<BoardProps> = ({ myTurn }) => {
   const { boardMatrix, roomId, gameOver } = useGame();
   const [props] = useSpring(
     () => ({
-      config: { mass: 2, tension: 800, friction: 18 },
+      config: { mass: 2.5, tension: 800, friction: 18 },
       from: { opacity: 0, x: -100 },
       to: { opacity: 1, x: 0 },
     }),

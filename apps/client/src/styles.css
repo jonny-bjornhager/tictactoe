@@ -11,10 +11,19 @@
     --clr-grey: rgb(207, 207, 207);
 
     /* Sizes */
-    --max-board-size: 37.5rem;
+    --max-board-size-small: 17.5rem;
+    --max-board-size-medium: 27.5rem;
+    --max-board-size-large: 37.5rem;
+
+    /* Font Sizes */
+    --font-size-small: 1rem;
+    --font-size-regular: 1.15rem;
+    --font-size-big: 1.3rem;
+    --font-size-xl: 1.5rem;
 
     /* Shadows */
     --drop-shadow: drop-shadow(2px 2px 6px #00000075);
+
 }
 
 * {

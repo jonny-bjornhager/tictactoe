@@ -1,12 +1,21 @@
 .board {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    block-size: 100%;
     inline-size: 100%;
-    max-block-size: var(--max-board-size);
-    max-inline-size: var(--max-board-size);
-
+    padding: 1rem;
+    max-inline-size: var(--max-board-size-small);
     filter: var(--drop-shadow);
+    aspect-ratio: 1;
+
+
+    @media screen and (min-width: 560px) {
+      max-inline-size: var(--max-board-size-medium);
+    }
+
+
+    @media screen and (min-width: 1025px) {
+      max-inline-size: var(--max-board-size-large);
+    }
 }
 
 .non-interact {
