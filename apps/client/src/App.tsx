@@ -74,7 +74,11 @@ export function App() {
   }
 
   function handlePlayAgain() {
-    socket?.emit(SOCKET_EVENTS.playAgain);
+    socket?.emit(SOCKET_EVENTS.playAgain, {
+      roomId: roomId,
+      playerName: playerName,
+      gameOver: false,
+    });
   }
 
   function handleQuitGame() {
@@ -123,6 +127,16 @@ export function App() {
       setInLobby(false);
     }
 
+    function onReloadGame(data: {
+      boardMatrix: BoardMatrix;
+      currentPlayer: CurrentPlayer;
+      gameOver: boolean;
+    }) {
+      setBoardMatrix(data.boardMatrix);
+      setCurrentPlayer(data.currentPlayer);
+      setGameOver(false);
+    }
+
     function onReloadWindow() {
       if (!window?.location || typeof window?.location === 'undefined') {
         return;
@@ -137,6 +151,7 @@ export function App() {
     socket?.on(SOCKET_EVENTS.gameOver, onGameOver);
     socket?.on(SOCKET_EVENTS.gameStarted, onGameStarted);
     socket?.on(SOCKET_EVENTS.reloadWindow, onReloadWindow);
+    socket?.on(SOCKET_EVENTS.reloadGame, onReloadGame);
 
     return () => {
       socket?.off(SOCKET_EVENTS.isHosting, onHostGame);
@@ -145,6 +160,7 @@ export function App() {
       socket?.off(SOCKET_EVENTS.enterDisallowed, onEnterDisallowed);
       socket?.off(SOCKET_EVENTS.gameStarted, onGameStarted);
       socket?.off(SOCKET_EVENTS.reloadWindow, onReloadWindow);
+      socket?.off(SOCKET_EVENTS.reloadGame, onReloadGame);
     };
   }, [
     socket,
@@ -153,6 +169,7 @@ export function App() {
     setRoomId,
     setCurrentPlayer,
     setGameOver,
+    gameOver,
   ]);
 
   useEffect(() => {
@@ -160,6 +177,12 @@ export function App() {
       setMyTurn(currentPlayer === playerName);
     }
   }, [playerName, currentPlayer]);
+
+  useEffect(() => {
+    if (gameOver && playerName === currentPlayer) {
+      setMyTurn(true);
+    }
+  }, [playerName, currentPlayer, gameOver]);
 
   return (
     <main className={s['app']}>
@@ -173,12 +196,12 @@ export function App() {
         />
       )}
       {inLobby && !gameStarted && <Lobby playerName={playerName} />}
-      {!inLobby && gameStarted && <Game message={message} myTurn={myTurn} />}
-      <Modal isOpen={gameOver} toggle={() => setGameOver(false)}>
+      {!inLobby && gameStarted && <Game myTurn={myTurn} />}
+      <Modal isOpen={gameOver} toggle={() => console.log('first')}>
         <ReplayContent
           headline={message}
           onQuit={handleQuitGame}
-          onReplay={() => console.log('replay')}
+          onReplay={handlePlayAgain}
         />
       </Modal>
     </main>

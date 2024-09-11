@@ -15,4 +15,5 @@ export const SOCKET_EVENTS = {
   playAgain: 'play_again',
   quitGame: 'quit_game',
   reloadWindow: 'reload_window',
+  reloadGame: 'reload_game',
 };

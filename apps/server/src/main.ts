@@ -160,6 +160,17 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
     }
   });
 
+  socket.on(SOCKET_EVENTS.playAgain, (data) => {
+    const gameState = gameStates[data.roomId];
+    gameState.setBoardMatrix(Array(9).fill(null));
+    gameState.setGameOver(false);
+    socket.to(data.roomId).emit(SOCKET_EVENTS.reloadGame, {
+      boardMatrix: gameState.getBoardMatrix(),
+      currentPlayer: gameState.getCurrentPlayer(),
+      gameOver: gameState.getGameOver(),
+    });
+  });
+
   socket.on(SOCKET_EVENTS.quitGame, (data: { roomId: string }) => {
     socket.to(data.roomId).emit(SOCKET_EVENTS.reloadWindow);
   });
@@ -176,7 +187,6 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
         delete gameStates[roomId];
       }
     }
-    console.log(data.roomId);
     socket.to(data.roomId).emit(SOCKET_EVENTS.afterDisconnect, {
       boardMatrix: Array(9).fill(null),
     });

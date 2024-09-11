@@ -34,7 +34,7 @@ npm install
 <p>3. Run both server and client by running:</p>
 
 ```
-npx nx run-many --target=serve --projects=clientserver
+npx nx run-many --target=serve --projects=client,server
 ```
 
 <h2>💻 Built with</h2>
