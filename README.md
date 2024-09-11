@@ -1,6 +1,6 @@
 <h1 align="center" id="title">Tic Tac Toe</h1>
 
-<p id="description">A Tic Tac Toe game the utilizes Socket IO.As of now, this game only features playing locally on one machine using two separate windows</p>
+<p id="description">A Tic Tac Toe game the utilizes Socket IO. As of now, this game only features playing locally on one machine using two separate windows</p>
 
 <h2>Project Screenshots:</h2>
 
