@@ -42,6 +42,7 @@ npx nx run-many --target=serve --projects=clientserver
 Technologies used in the project:
 
 - React js
+- TypeScript
 - Express js
 - Socket.io
 - react-spring
