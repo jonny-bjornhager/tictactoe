@@ -7,6 +7,10 @@
     --clr-secondary: #F5F7F8;
     --clr-primary-light: #161616;
     --clr-primary-dark: rgb(14, 13, 13);
+    --clr-secondary-dark: #777777;
+
+
+    --clr-backdrop: rgba(0, 0, 0, .5);
 
     --clr-grey: rgb(207, 207, 207);
 

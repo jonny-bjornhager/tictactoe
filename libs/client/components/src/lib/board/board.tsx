@@ -1,11 +1,11 @@
 import { useGame, useSocket } from '@tictactoe/client/hooks';
-import { animated, useSpring } from '@react-spring/web';
 
 import { Square } from '../square/square';
 import s from './board.module.css';
 
 import clsx from 'clsx';
 import { SOCKET_EVENTS } from '@tictactoe/shared';
+import { animated, useSpring } from '@react-spring/web';
 
 interface BoardProps {
   myTurn: boolean;
@@ -14,6 +14,7 @@ interface BoardProps {
 export const Board: React.FC<BoardProps> = ({ myTurn }) => {
   const socket = useSocket();
   const { boardMatrix, roomId, gameOver } = useGame();
+
   const [props] = useSpring(
     () => ({
       config: { mass: 2.5, tension: 800, friction: 18 },

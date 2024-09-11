@@ -34,7 +34,7 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
   socket.on(SOCKET_EVENTS.hostGame, () => {
     const roomId = `game_${socket.id}`;
     const playerData: PlayerData = {
-      id: socket.id,
+      id: 1,
       isHost: true,
       name: 'x',
       roomId: roomId,
@@ -98,7 +98,7 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
         roomId: roomId,
         gameStarted: true,
       };
-      socket.emit(SOCKET_EVENTS.hasJoined, clientGameData);
+      socket.to(roomId).emit(SOCKET_EVENTS.hasJoined, clientGameData);
     }
   });
 
@@ -125,6 +125,7 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
       currentPlayer: gameState.getCurrentPlayer(),
     };
 
+    // Check draw
     if (gameState.checkDraw()) {
       gameState.setGameOver(true);
       socket.to(roomId).emit(SOCKET_EVENTS.gameOver, {
@@ -133,15 +134,19 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
         message: "It's a draw!",
       });
       return;
+      // Check winner
     } else if (gameState.checkWinner()) {
       gameState.setGameOver(true);
+      gameState.updatePlayerScore(gameState.getCurrentPlayer());
       socket.to(roomId).emit(SOCKET_EVENTS.gameOver, {
         ...updatedBoardData,
         gameOver: gameState.getGameOver(),
         message: `${gameState.getCurrentPlayer().toUpperCase()} wins!`,
         myTurn: false,
+        players: gameState.getPlayers(),
       });
       return;
+      // If no one has won, keep playing
     } else {
       gameState.switchCurrentPlayer(gameState.getCurrentPlayer());
       const updatedBoardData: UpdatedBoardData = {

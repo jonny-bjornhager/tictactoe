@@ -1,0 +1,16 @@
+.scores {
+  display: flex;
+  gap: 1rem;
+}
+
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--clr-secondary-dark);
+  transition: color .3s ease;
+}
+
+.highlighted {
+  color: var(--clr-secondary);
+}

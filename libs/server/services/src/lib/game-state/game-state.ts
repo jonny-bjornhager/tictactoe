@@ -69,4 +69,12 @@ export class GameState {
   setGameOver(input: boolean) {
     this.gameOver = input;
   }
+  updatePlayerScore(playerToUpdate: CurrentPlayer) {
+    const playersCopy = this.getPlayers().map((player) =>
+      player.name === playerToUpdate
+        ? { ...player, score: player.score + 1 } // Create a new player object
+        : player
+    );
+    this.setPlayers(playersCopy);
+  }
 }

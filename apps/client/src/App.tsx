@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SOCKET_EVENTS } from '@tictactoe/shared/constants';
 import { useGame, useSocket } from '@tictactoe/client/hooks';
-import { Game, JoinGame, Lobby } from '@tictactoe/client/components';
+import { Game, JoinGame, Lobby, Modal } from '@tictactoe/client/components';
 import {
   ClientGameData,
   CurrentPlayer,
@@ -12,16 +12,25 @@ import {
   UpdatedBoardData,
 } from '@tictactoe/shared';
 
+import s from './App.module.css';
+
 export function App() {
   const socket = useSocket();
-  const { setPlayers, setBoardMatrix, setRoomId } = useGame();
+  const {
+    setPlayers,
+    setBoardMatrix,
+    setRoomId,
+    currentPlayer,
+    setCurrentPlayer,
+    gameOver,
+    setGameOver,
+  } = useGame();
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [inLobby, setInLobby] = useState<boolean>(false);
   const [roomIdInput, setRoomIdInput] = useState<string>('');
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [playerName, setPlayerName] = useState<CurrentPlayer | null>(null);
-  const [currentPlayer, setCurrentPlayer] = useState<CurrentPlayer | null>('x');
   const [myTurn, setMyTurn] = useState<boolean>(false);
 
   const canJoin = roomIdInput.length >= 4;
@@ -38,8 +47,9 @@ export function App() {
     if (!roomIdInput || !socket?.id) {
       return;
     }
+    setPlayerName('o');
     const playerData: PlayerData = {
-      id: socket.id,
+      id: 2,
       isHost: false,
       name: 'o',
       roomId: roomIdInput,
@@ -59,7 +69,6 @@ export function App() {
       setInLobby(true);
       setPlayers(data.players);
       setBoardMatrix(data.boardMatrixData);
-      setCurrentPlayer(data.currentPlayer);
       setPlayerName('x');
     }
 
@@ -68,8 +77,6 @@ export function App() {
       setGameStarted(data.gameStarted);
       setInLobby(!data.gameStarted);
       setPlayers(data.players);
-      setCurrentPlayer(data.currentPlayer);
-      setPlayerName('o');
       socket?.emit(SOCKET_EVENTS.startGame, {
         roomId: data.roomId,
       });
@@ -88,6 +95,8 @@ export function App() {
       setBoardMatrix(data.boardMatrix);
       setMessage(data.message);
       setMyTurn(data.myTurn);
+      setPlayers(data.players);
+      setGameOver(data.gameOver);
     }
 
     function onGameStarted(data: { gameStarted: boolean }) {
@@ -109,7 +118,14 @@ export function App() {
       socket?.off(SOCKET_EVENTS.enterDisallowed, onEnterDisallowed);
       socket?.off(SOCKET_EVENTS.gameStarted, onGameStarted);
     };
-  }, [socket, setPlayers, setBoardMatrix, setRoomId]);
+  }, [
+    socket,
+    setPlayers,
+    setBoardMatrix,
+    setRoomId,
+    setCurrentPlayer,
+    setGameOver,
+  ]);
 
   useEffect(() => {
     if (playerName && currentPlayer) {
@@ -118,7 +134,7 @@ export function App() {
   }, [playerName, currentPlayer]);
 
   return (
-    <main>
+    <main className={s['app']}>
       {!gameStarted && !inLobby && (
         <JoinGame
           onChange={handleRoomInputChange}
@@ -130,6 +146,10 @@ export function App() {
       )}
       {inLobby && !gameStarted && <Lobby playerName={playerName} />}
       {!inLobby && gameStarted && <Game message={message} myTurn={myTurn} />}
+
+      <Modal isOpen={gameOver} toggle={() => setGameOver(false)}>
+        {gameOver && message && <h2>{message}</h2>}
+      </Modal>
     </main>
   );
 }

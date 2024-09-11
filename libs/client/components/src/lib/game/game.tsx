@@ -1,5 +1,5 @@
 import { Board } from '../board/board';
-// import { Scores } from '../scores/scores';
+import { Scores } from '../scores/scores';
 import s from './game.module.css';
 
 interface GameProps {
@@ -12,7 +12,7 @@ export const Game: React.FC<GameProps> = ({ message, myTurn }) => {
     <div className={s['game']}>
       {message && <h2>{message}</h2>}
       <Board myTurn={myTurn} />
-      {/* <Scores /> */}
+      <Scores myTurn={myTurn} />
     </div>
   );
 };
