@@ -1,0 +1,4 @@
+[build]
+command = "nx build client"
+publish = "dist/apps/client"
+ignore = "exit 1" # always say content changed
