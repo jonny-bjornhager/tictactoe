@@ -14,7 +14,7 @@ export const SocketProvider: React.FC<SocketProviderProps> = ({ children }) => {
 
   const host =
     import.meta.env.VITE_MODE === 'production'
-      ? 'http'
+      ? 'https://tictactoe-socket-s2sb.onrender.com:3001'
       : 'http://localhost:3001';
 
   useEffect(() => {
