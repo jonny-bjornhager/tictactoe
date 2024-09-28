@@ -16,17 +16,19 @@ import { GameState } from '@tictactoe/server/services';
 configDotenv();
 
 const app = express();
-const host = process.env.HOST ?? 'localhost';
-const port = process.env.PORT ? Number(process.env.PORT) : 3001;
+const host = process.env.HOST ?? '0.0.0.0';
+const port = process.env.PORT || 3001;
 
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: host !== 'localhost' ? host : `http://${host}:3000`,
+    origin:
+      process.env.VITE_MODE === 'production'
+        ? process.env.CLIENT_URL
+        : 'http://localhost:3000',
     methods: ['GET', 'POST'],
   },
 });
-
 const gameStates: { [roomId: string]: GameState } = {};
 
 io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
