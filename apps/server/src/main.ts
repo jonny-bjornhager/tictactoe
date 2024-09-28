@@ -16,8 +16,8 @@ import { GameState } from '@tictactoe/server/services';
 configDotenv();
 
 const app = express();
-const host = process.env.HOST ?? '0.0.0.0';
-const port = process.env.PORT || 3001;
+const hostname = process.env.HOST ?? '0.0.0.0';
+const port = +process.env.PORT || 3001;
 
 const server = createServer(app);
 const io = new Server(server, {
@@ -195,6 +195,6 @@ io.on(SOCKET_EVENTS.connect, (socket: Socket) => {
   });
 });
 
-server.listen(port, host, () => {
-  console.log(`[ ready ] http://${host}:${port}`);
+server.listen(port, hostname, () => {
+  console.log(`[ ready ] http://${hostname}:${port}`);
 });
